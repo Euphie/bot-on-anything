@@ -1,7 +1,19 @@
-version: '2.0'
+version: '3'
 services:
-  bot-on-anything:
+  bot-on-wechat-mp:
     build:
       context: .
     image: euphie/bot-on-anything:v0.0.1
-    container_name: sample-chatgpt-on-wechat
+    container_name: bot-on-wechat-mp
+    volumes:
+      - ./configs/wechat_mp.json:/app/config.json
+    expose:
+      - "9090"
+    environment:
+      - VIRTUAL_HOST=wechat.euphie.me
+      - LETSENCRYPT_HOST=wechat.euphie.me
+      - LETSENCRYPT_EMAIL=euphie@vip.qq.com
+networks:
+  default:
+    external:
+      name: web_default

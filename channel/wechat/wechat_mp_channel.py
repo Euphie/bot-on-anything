@@ -29,7 +29,7 @@ def hello_world(msg):
                 else:
                     found = False
         if found:
-            return '你输入的内容包含敏感词汇'
+            return '你输入的内容包含敏感词汇，请重新输入。'
         else:
             logger.info('[WX_Public] receive public msg: {}, userId: {}'.format(msg.content, msg.source))
             key = msg.content + '|' + msg.source
@@ -51,26 +51,26 @@ class WechatSubsribeAccount(Channel):
         context['from_user_id'] = msg.source
         key = msg.source
         res = cache.get(key)
-        if msg.content == "继续":
+        if msg.content == "1":
             if not res or res.get("status") == "done":
-                return "目前不在等待回复状态，请输入对话"
+                return "你好，我是 Euphie，是一个智能机器人，有什么想问我的呢？"
             if res.get("status") == "waiting":
-                return "还在处理中，请稍后再试"
+                return "给我点时间思考你的问题，请稍等片刻后输入\"1\"查看回复。"
             elif res.get("status") == "success":
                 cache[key] = {"status":"done"}
                 return res.get("data")
             else:
-                return "目前不在等待回复状态，请输入对话"
+                return "你好，我是 Euphie，是一个智能机器人，有什么想问我的呢？"
         elif not res or res.get('status') == "done":
             thread_pool.submit(self._do_send, msg.content, context)
-            return "已开始处理，请稍等片刻后输入\"继续\"查看回复"
+            return "给我点时间思考你的问题，请稍等片刻后输入\"1\"查看回复。"
         else:
             if res.get('status') == "done":
                 reply = res.get("data")
                 thread_pool.submit(self._do_send, msg.content, context)
                 return reply
             else:
-                return "上一句对话正在处理中，请稍后输入\"继续\"查看回复"
+                return "我还在思考你的上一个问题，请稍后输入\"1\"查看回复。"
 
     def _do_send(self, query, context):
         key = context['from_user_id']
