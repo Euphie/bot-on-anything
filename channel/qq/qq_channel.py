@@ -3,7 +3,8 @@ from aiocqhttp import CQHttp, Event
 from common import log
 from concurrent.futures import ThreadPoolExecutor
 
-bot = CQHttp(api_root='http://127.0.0.1:5700')
+# TODO
+bot = CQHttp(api_root='http://home.euphie.me:2223')
 thread_pool = ThreadPoolExecutor(max_workers=8)
 
 @bot.on_message('private')
@@ -18,7 +19,7 @@ def handle_private_msg(event: Event):
 
 class QQChannel(Channel):
     def startup(self):
-        bot.run(host='127.0.0.1', port=8080)
+        bot.run(host='0.0.0.0', port=9091)
 
     # private chat
     def handle(self, msg):

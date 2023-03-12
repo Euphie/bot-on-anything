@@ -13,6 +13,15 @@ services:
       - VIRTUAL_HOST=wechat.euphie.me
       - LETSENCRYPT_HOST=wechat.euphie.me
       - LETSENCRYPT_EMAIL=euphie@vip.qq.com
+  bot-on-qq:
+    build:
+      context: .
+    image: euphie/bot-on-anything:v0.0.1
+    container_name: bot-on-qq
+    volumes:
+      - ./configs/qq.json:/app/config.json
+    ports:
+      - "9091:9091"
 networks:
   default:
     external:

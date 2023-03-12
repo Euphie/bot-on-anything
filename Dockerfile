@@ -13,6 +13,7 @@ RUN apk add --no-cache \
     && pip install --no-cache   \
         itchat-uos==1.5.0.dev0  \
         werobot  \
+        aiocqhttp \
         openai
 
 
@@ -21,10 +22,6 @@ WORKDIR ${BUILD_PREFIX}
 
 COPY . ${BUILD_PREFIX}
 
-RUN chmod +x entrypoint.sh \
-    && adduser -D -h /home/noroot -u 1000 -s /bin/bash noroot \
-    && chown noroot:noroot ${BUILD_PREFIX}
-
-USER noroot
+RUN chmod +x entrypoint.sh
 
 ENTRYPOINT ["./entrypoint.sh"]
