@@ -1,0 +1,7 @@
+version: '2.0'
+services:
+  bot-on-anything:
+    build:
+      context: .
+    image: euphie/bot-on-anything:v0.0.1
+    container_name: sample-chatgpt-on-wechat
