@@ -53,14 +53,14 @@ class WechatSubsribeAccount(Channel):
         res = cache.get(key)
         if msg.content == "1":
             if not res or res.get("status") == "done":
-                return "你好，我是 Euphie 的小跟班，是一个智能机器人，有什么想问我的呢？"
+                return "你好，我是 Euphie，是一个智能机器人，有什么想问我的呢？"
             if res.get("status") == "waiting":
                 return "给我点时间思考你的问题，请稍等片刻后输入\"1\"查看回复。"
             elif res.get("status") == "success":
                 cache[key] = {"status":"done"}
                 return res.get("data")
             else:
-                return "你好，我是 Euphie 的小跟班，是一个智能机器人，有什么想问我的呢？"
+                return "你好，我是 Euphie，是一个智能机器人，有什么想问我的呢？"
         elif not res or res.get('status') == "done":
             thread_pool.submit(self._do_send, msg.content, context)
             return "给我点时间思考你的问题，请稍等片刻后输入\"1\"查看回复。"

@@ -2,9 +2,10 @@ from channel.channel import Channel
 from aiocqhttp import CQHttp, Event
 from common import log
 from concurrent.futures import ThreadPoolExecutor
+from common import const
+from config import channel_conf_val
 
-# TODO
-bot = CQHttp(api_root='http://home.euphie.me:2223')
+bot = CQHttp(api_root=channel_conf_val(const.QQ, 'api_root'))
 thread_pool = ThreadPoolExecutor(max_workers=8)
 
 @bot.on_message('private')
